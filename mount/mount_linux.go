@@ -355,6 +355,7 @@ func (mounter *SafeFormatAndMount) formatAndMount(source string, target string, 
 	} else {
 		if fstype != existingFormat {
 			// Verify that the disk is formatted with filesystem type we are expecting
+			klog.Infof("********** hemant got a filesystem mismatch error")
 			mountErrorValue = FilesystemMismatch
 			klog.Warningf("Configured to mount disk %s as %s but current format is %s, things might break", source, existingFormat, fstype)
 		}
@@ -378,6 +379,7 @@ func (mounter *SafeFormatAndMount) formatAndMount(source string, target string, 
 	// Mount the disk
 	klog.V(4).Infof("Attempting to mount disk %s in %s format at %s", source, fstype, target)
 	if err := mounter.Interface.Mount(source, target, fstype, options); err != nil {
+		klog.Infof("********** returning a mount error")
 		return NewMountError(mountErrorValue, err.Error())
 	}
 
