@@ -377,8 +377,9 @@ func (mounter *SafeFormatAndMount) formatAndMount(source string, target string, 
 	}
 
 	// Mount the disk
-	klog.V(4).Infof("Attempting to mount disk %s in %s format at %s", source, fstype, target)
+	klog.V(2).Infof("hemant : Attempting to mount disk %s in %s format at %s error %s", source, fstype, target, mountErrorValue)
 	if err := mounter.Interface.Mount(source, target, fstype, options); err != nil {
+		klog.Errorf("hemant : returning mountError with value: %v", mountErrorValue)
 		return NewMountError(mountErrorValue, err.Error())
 	}
 
